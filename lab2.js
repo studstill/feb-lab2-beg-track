@@ -40,41 +40,33 @@ function assert(expression, failureMessage) {
         2          |       3/hour
         3          |       4/hour
 
- TODO: First, make a constructor function, called Blob, that makes blobs.
 */
+
+// make a constructor function, called Blob, that makes blobs
 function Blob(name) {
     this.name = name;
 }
 
-/*
- TODO: Next, create an instance of Blob named blob.
-*/
-
+// create an instance of Blob named blob
 var blob = new Blob(blob);
 
-/*
- TODO: Then, use a loop to calculate how long it took the blob to finish
- with Dowington.
-*/
-
+// declare variables & initial conditions for calculating the blob takeover
 var personsConsumed = 0;
 var personsRemaining = 1000;
 var rateOfConsumption = 1;
 var hoursSpentInDowington;
 
+//use a loop to calc how long it took blob to finish with Dowington
 for (i = 0, j = 1; i < personsRemaining; i++, j++) {
   hoursSpentInDowington = i;
   rateOfConsumption = j;
   personsRemaining = personsRemaining - rateOfConsumption;
 }
 
- // TODO: assign me the value of the above calculation
+ // assign hoursSpentInDowington the value of the above calculation
  hoursSpentInDowington = 43;
 
-// Now, write a method that takes a population for an arbitrary
-// town, and the starting consumption rate, and returns the number
-// of hours the blob needs to ooze its way through that town.
-
+// create a function that takes a population for an arbitrary town, and the starting consumption rate, and returns the number of hours the blob needs to ooze its way through that town
 function hoursToOoze(population, peoplePerHour) {
   var hours;
   var pop = population;
@@ -92,7 +84,7 @@ function hoursToOoze(population, peoplePerHour) {
   return hours;
 }
 
-// assign hoursToOoze function to Blob prototype
+// create a method, Blob.hoursToOoze, and assign it the above function, hoursToOoze
 Blob.prototype.hoursToOoze = hoursToOoze;
 
 assert(blob.hoursToOoze(0, 1) === 0, "no people means no time needed.");
@@ -115,7 +107,15 @@ var hello = {
 // sentient beings. They have a home planet, a language that they
 // speak, and method called sayHello.
 
-function SentientBeing () {
+function SentientBeing (homePlanet, language) {
+  this.homePlanet = homePlanet;
+  this.language = language;
+  this.hello = "I have no default greeting";
+  this.sayHello = function sayHello(sb) {
+    sb = this;
+    conosle.log(this.hello);
+    return sb.hello;
+  }
 
   // TODO: specify a home planet and a language
   // you'll need to add parameters to this constructor
