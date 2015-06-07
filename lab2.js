@@ -50,37 +50,42 @@ function Blob(name) {
 // create an instance of Blob named blob
 var blob = new Blob(blob);
 
-// declare variables & initial conditions for calculating the blob takeover
-var personsConsumed = 0;
-var personsRemaining = 1000;
+// declare variables & initialize conditions for calculating the blob takeover
+var pplConsumed =  0;
+var pplRemaining = 1000;
 var rateOfConsumption = 1;
-var hoursSpentInDowington;
+var hoursSpentInDowington = 0;
 
-//use a loop to calc how long it took blob to finish with Dowington
-for (i = 0, j = 1; i < personsRemaining; i++, j++) {
+// use a loop to calc how long it took blob to finish with Dowington
+// initialize i (hours) to 1
+for (var i = 1, j = rateOfConsumption; pplRemaining > 0 ; i++, j++) {
   hoursSpentInDowington = i;
   rateOfConsumption = j;
-  personsRemaining = personsRemaining - rateOfConsumption;
+  pplRemaining = pplRemaining - rateOfConsumption;
 }
 
- // assign hoursSpentInDowington the value of the above calculation
- hoursSpentInDowington = 43;
+console.log(hoursSpentInDowington);
 
-// create a function that takes a population for an arbitrary town, and the starting consumption rate, and returns the number of hours the blob needs to ooze its way through that town
+ // assign hoursSpentInDowington the value of the above calculation
+ hoursSpentInDowington = 45;
+
+// create a function that takes a population for an arbitrary town,
+// and the starting consumption rate, and returns the number of hours
+// the blob needs to ooze its way through that town
+
 function hoursToOoze(population, peoplePerHour) {
-  var hours;
+  var hours = 0;
   var pop = population;
   var pph = peoplePerHour;
 
-  if (population < 1) {
-    hours = 0;
-  } else {
-    for (i = 0, j = pph; i < pop; i++, j++) {
+// use a loop to calc how long it took blob to finish with Dowington
+// initialize i (hours) to 1
+  for (var i = 1, j = pph; pop > 0; i++, j++) {
       pph = j;
       hours = i;
-      pop = pop - pph;
+      pop -= pph;
     }
-  }
+  console.log("hours is " + hours);
   return hours;
 }
 
@@ -90,9 +95,10 @@ Blob.prototype.hoursToOoze = hoursToOoze;
 assert(blob.hoursToOoze(0, 1) === 0, "no people means no time needed.");
 assert(blob.hoursToOoze(1000, 1) === hoursSpentInDowington,
   "hoursSpentInDowington should match hoursToOoze\"s result for 1000");
+assert(blob.hoursToOoze(1000, 0) === 46, "lazy blob takes the 1st hour off.");
+assert(blob.hoursToOoze(5, 5) === 1, "small town + hungry blob === 1 hour.");
 
-// TODO: write three more assertions like the two above, testing out
-// the hoursToOoze method.
+assert(blob.hoursToOoze(500000, 1) === 1000, "500,000 takes only 1,000 hrs");
 
 //*********************************************************
 // PROBLEM 2: Universal Translator. 20 points
@@ -115,33 +121,24 @@ function SentientBeing (homePlanet, language) {
   this.sayHello = function(sb) {
     console.log(this.hello);
     return sb.hello;
-  }
+  };
 }
 
 var klingon = new SentientBeing('Qo"noS', "klingon");
 var romulan = new SentientBeing("Romulus", "romulan");
-var Human = new SentientBeing("Earth", "federation standard");
+var human = new SentientBeing("Earth", "federation standard");
 
-function Klingon() {}
-function Romulan() {}
-function Human() {}
-Human.prototype = new SentientBeing("Earth", "federation standard")
-Klingon.prototype = new SentientBeing('Qo"noS', "klingon");
-Romulan.prototype = new SentientBeing("Romulus", "romulan");
-
-
-assert((new Human()).sayHello(new Klingon()) === "nuqneH",
+assert(human.sayHello(klingon) === "nuqneH",
   "the klingon should hear nuqneH");
-
-assert((new Human()).sayHello(new Romulan()) === "Jolan\"tru",
+assert(human.sayHello(romulan) === "Jolan\"tru",
   "the romulan should hear Jolan\"tru");
-assert((new Romulan()).sayHello(new Klingon()) === "nuqneH",
+assert(romulan.sayHello(klingon) === "nuqneH",
   "the klingon should hear nuqneH");
-assert((new Romulan()).sayHello(new Human()) === "hello",
+assert(romulan.sayHello(human) === "hello",
   "the human should hear hello");
-assert((new Klingon()).sayHello(new Romulan()) === "Jolan\"tru",
+assert(klingon.sayHello(romulan) === "Jolan\"tru",
   "the romulan should hear Jolan\"tru");
-assert((new Klingon()).sayHello(new Human()) === "hello",
+assert(klingon.sayHello(human) === "hello",
   "the human should hear hello");
 
 //*********************************************************
@@ -162,14 +159,13 @@ function max(array) {
 }
 
 assert(max([ 1, 3, 2 ]) === 3, "[1,3,2]");
-assert(max([ 1, 5, 7, 9]) === 9, "[1,5,7,9]");
-assert(max([1]) === 1, "[1]");
-assert(max([ 2.33, 9.9999, 100.255, 6 ]) === 100.255, '[2.33,9.9999,100.255,6 ]');
-
+assert(max([ 1, 5, 7, 9 ]) === 9, "[1,5,7,9]");
+assert(max([ 1 ]) === 1, "[1]");
+assert(max([ 2.33, 9.9999, 100.255, 6 ]) === 100.255, "[2.33,9.9999,100.255,6 ]");
 
 function variablify(string) {
-  var array = string.split(' ');
-  var camelString = '';
+  var array = string.split(" ");
+  var camelString = "";
   for (var i = 0; i < array.length; i++) {
     if (i === 0) {
       var firstWord = array[i];
@@ -184,7 +180,6 @@ function variablify(string) {
   }
   return camelString;
 }
-
 
 // TODO: write three more assertions
 assert(variablify("one two three") === "oneTwoThree",
